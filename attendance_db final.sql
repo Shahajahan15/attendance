@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 20, 2019 at 02:57 PM
+-- Generation Time: Nov 26, 2019 at 06:46 AM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.3.3
 
@@ -40,6 +40,13 @@ CREATE TABLE `attendances` (
   `status` int(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `attendances`
+--
+
+INSERT INTO `attendances` (`id`, `user_id`, `batch_id`, `date`, `rating`, `review`, `notes`, `approved`, `status`) VALUES
+(1, 9, 2, '2019-05-17 18:00:00', 4, 'jshdfjsdlkfds;km', '', 0, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -51,11 +58,21 @@ CREATE TABLE `batches` (
   `code` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
   `title` varchar(512) COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `limit` int(11) NOT NULL,
+  `class_limit` int(11) NOT NULL,
   `trainer_id` int(11) NOT NULL,
   `course_id` int(11) NOT NULL,
   `status` int(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `batches`
+--
+
+INSERT INTO `batches` (`id`, `code`, `title`, `description`, `class_limit`, `trainer_id`, `course_id`, `status`) VALUES
+(1, '254', 'morning shift', 'this is morning shift batch ', 20, 8, 3, 1),
+(2, '254', 'morning shift', 'this is morning shift batch ', 20, 9, 3, 1),
+(3, '254', 'morning shift', 'this is morning shift batch ', 20, 7, 3, 1),
+(4, '254', 'morning shift', 'this is morning shift batch ', 1, 7, 3, 1);
 
 -- --------------------------------------------------------
 
@@ -78,7 +95,9 @@ CREATE TABLE `courses` (
 --
 
 INSERT INTO `courses` (`id`, `code`, `title`, `description`, `number_of_class`, `duration`, `status`) VALUES
-(1, '1010', 'PHP Course', '                    Hello Hello Hello Hello                   ', 20, 40, 1);
+(1, '1010', 'PHP Course', 'Hello Hello Hello Hello                                     ', 20, 40, 1),
+(3, 'DWKS', 'Marathon  Engine Systems logo', 'hello', 32, 120, 1),
+(4, 'DWKSzxcsdfgdgd', 'Marathon', '                                                            hello                  sfdsadfsdf                                    ', 20, 60, 1);
 
 -- --------------------------------------------------------
 
@@ -98,6 +117,13 @@ CREATE TABLE `notices` (
   `status` int(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `notices`
+--
+
+INSERT INTO `notices` (`id`, `created_by`, `notice_type_id`, `title`, `description`, `batch_id`, `start_at`, `finish_at`, `status`) VALUES
+(1, 6, 1, 'this is important', 'ththis is importantthis is importantthis is importantthis is important', 2, '2019-05-08 05:07:56', '2019-12-22 00:00:00', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -111,6 +137,14 @@ CREATE TABLE `notices_types` (
   `bootstrap_class` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'primary',
   `status` int(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `notices_types`
+--
+
+INSERT INTO `notices_types` (`id`, `title`, `description`, `bootstrap_class`, `status`) VALUES
+(1, 'Important', NULL, 'info', 1),
+(2, 'Warning', NULL, 'warning', 1);
 
 -- --------------------------------------------------------
 
@@ -141,7 +175,7 @@ INSERT INTO `roles` (`id`, `title`, `status`) VALUES
 
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
-  `role_id` int(11) NOT NULL,
+  `role_id` int(11) NOT NULL DEFAULT '3',
   `name` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
   `image` varchar(512) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -155,7 +189,15 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `role_id`, `name`, `image`, `email`, `msisdn`, `password`, `status`) VALUES
-(6, 2, 'Bappi', '', 'ferdosh.epon@yahoo.com', '01681692786', 'e10adc3949ba59abbe56e057f20f883e', 1);
+(6, 1, 'Bappi', 'http://localhost/attendance/uploads/users/photos/15581856446.GIF', 'saroven@yahoo.com', '01681692786', 'c33367701511b4f6020ec61ded352059', 1),
+(7, 3, 'roven kha', 'http://localhost/attendance/uploads/users/photos/15581866877.jpg', 'ashah3562@gmail.com', '01833825028', 'e10adc3949ba59abbe56e057f20f883e', 1),
+(8, 2, 'Yousuf Mahmud', '', 'fahim@gmail.com', '01833825028', 'e10adc3949ba59abbe56e057f20f883e', 1),
+(9, 2, 'murad', '', 'murad@gmail.com', '01833825028', 'e10adc3949ba59abbe56e057f20f883e', 1),
+(10, 3, 'bappi hossen', '', 'bappi@gmail.com', '1858787907', 'e10adc3949ba59abbe56e057f20f883e', 0),
+(14, 3, 'sdfsadfsdf', '', 'sdfsdfsd@sfsadds.com', '01681692786', 'e10adc3949ba59abbe56e057f20f883e', 1),
+(15, 2, 'Bappi dsdf', 'http://localhost/attendance/uploads/users/photos/1558187021.', 'bappi_ifci@yahoo.com', '0168169278645', 'e10adc3949ba59abbe56e057f20f883e', 1),
+(16, 2, 'sfdsfsd', 'http://localhost/attendance/uploads/users/photos/no_image.png', 'bappi_ifci@yahoo.comd', '01681692786', '96e79218965eb72c92a549dd5a330112', 1),
+(17, 1, 'Bappi sdsfssdfdsf', 'http://localhost/attendance/uploads/users/photos/155818770817.jpg', 'bappi_ifci@yahoo.comss', '01681692786', '96e79218965eb72c92a549dd5a330112', 1);
 
 -- --------------------------------------------------------
 
@@ -173,6 +215,18 @@ CREATE TABLE `user_batch` (
   `got_review` text COLLATE utf8mb4_unicode_ci,
   `status` int(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `user_batch`
+--
+
+INSERT INTO `user_batch` (`id`, `user_id`, `batch_id`, `own_rating`, `own_review`, `got_rating`, `got_review`, `status`) VALUES
+(11, 7, 2, NULL, NULL, NULL, NULL, 1),
+(12, 7, 4, 3, 'dgfgdfgdgfd', NULL, NULL, 1),
+(27, 10, 1, NULL, NULL, NULL, NULL, 1),
+(28, 10, 2, NULL, NULL, NULL, NULL, 1),
+(29, 10, 3, NULL, NULL, NULL, NULL, 1),
+(30, 10, 4, NULL, NULL, NULL, NULL, 1);
 
 --
 -- Indexes for dumped tables
@@ -245,31 +299,31 @@ ALTER TABLE `user_batch`
 -- AUTO_INCREMENT for table `attendances`
 --
 ALTER TABLE `attendances`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `batches`
 --
 ALTER TABLE `batches`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `courses`
 --
 ALTER TABLE `courses`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `notices`
 --
 ALTER TABLE `notices`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `notices_types`
 --
 ALTER TABLE `notices_types`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `roles`
@@ -281,13 +335,13 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `user_batch`
 --
 ALTER TABLE `user_batch`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- Constraints for dumped tables
